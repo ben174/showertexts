@@ -4,8 +4,11 @@
   <h1>Shower Texts</h1>
   <p class="lead">Your daily dose of ShowerThoughts - sent to your phone.</p>
   <p>
-    <input type="text" id="sms_number" name="sms_number" placeholder="Mobile Number (i.e. 209-555-1212)">
-    <a class="btn btn-lg btn-success" href="#" role="button">Send me a daily shower thought!</a>
+    <form method="post" action="/subscribe">
+      {% csrf_token %}
+      <input type="text" id="sms_number" name="sms_number" placeholder="Mobile Number (i.e. 209-555-1212)">
+      <input type="submit" class="btn btn-lg btn-success" href="#" role="button" value="Send me a daily shower thought!" />
+  </form>
   </p>
   <p>I won't send any spam or anything etc etc.</p>
 </div>

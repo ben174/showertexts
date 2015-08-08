@@ -19,5 +19,6 @@ import texts.views
 
 urlpatterns = [
     url(r'^$', 'texts.views.home'),
+    url(r'^subscribe$', 'texts.views.subscribe'),
     url(r'^admin/', include(admin.site.urls)),
 ]
