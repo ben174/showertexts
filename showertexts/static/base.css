@@ -77,3 +77,17 @@ body {
     border-bottom: 0;
   }
 }
+
+#sms_number {
+    width: 340px;
+    margin-bottom: 10px;
+    padding: 9px;
+}
+
+body {
+    background-color: #69969C;
+}
+
+a, a:focus, a:hover {
+    color: #012E34;
+}

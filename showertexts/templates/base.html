@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,7 +16,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/static/base.css" rel="stylesheet">
+    <link href="{% static 'base.css' %}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -39,7 +40,9 @@
             <li role="presentation"><a href="#">Contact</a></li>
           </ul>
         </nav>
+        <!--
         <h3 class="text-muted">ShowerTexts</h3>
+        -->
       </div>
 
       {% block content %}
