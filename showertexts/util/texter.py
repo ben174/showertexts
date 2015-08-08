@@ -17,7 +17,7 @@ def get_thought(today=True, rank=1):
     return submission
 
 def send_initial_text(subscriber):
-    message = "Cool! You'll start receiver Shower Texts daily. " \
+    message = "Cool! You'll start receiving Shower Texts daily. " \
         "Reply STOP at any time if you get sick of them. " \
         "Your first one will follow..."
     send_text(subscriber, message, 'initial')

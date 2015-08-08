@@ -105,6 +105,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+print "ENVIRONMENT VARIABLES!!!!"
+print os.environ
+for k, v in os.environ.iteritems():
+    print k, v
 if 'DJANGO_ADMIN_PASSWORD' in os.environ:
     ACCOUNT_SID = os.environ['TWILIO_SID']
     ACCOUNT_TOKEN = os.environ['TWILIO_TOKEN']
