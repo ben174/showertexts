@@ -121,6 +121,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "static")
+
 
 # load custom settings if they exist. this looks anywhere in the path
 try:
