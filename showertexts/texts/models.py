@@ -1,7 +1,7 @@
 from django.db import models
 
 class Subscriber(models.Model):
-    sms_number = models.CharField(max_length=20)
+    sms_number = models.CharField(max_length=20, unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
 

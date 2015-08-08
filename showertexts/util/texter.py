@@ -1,10 +1,10 @@
+from django.conf import settings
 import praw
 from twilio.rest import TwilioRestClient
-from custom_settings import ACCOUNT_SID, AUTH_TOKEN, SUBSCRIBERS
-from texts import models
+from texts.models import TextSend, Subscriber
+import logging
 
-
-client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+client = TwilioRestClient(settings.ACCOUNT_SID, settings.AUTH_TOKEN)
 
 def get_thought(today=True, rank=1):
     r = praw.Reddit(user_agent='shower_texts')
@@ -31,7 +31,7 @@ def send_text(subscriber, message, post_id):
         from_="+14152002895",
         body=message,
     )
-    models.TextSend.objects.create(
+    TextSend.objects.create(
         subscriber=subscriber,
         post_id=post_id,
         message_text=message,
@@ -40,5 +40,5 @@ def send_text(subscriber, message, post_id):
 def send_todays_texts():
     thought = get_thought()
     for subscriber in Subscriber.objects.filter(active=True):
-        print 'Sending text to: ' + str(subscriber)
+        logging.info('Sending text to: ' + str(subscriber))
         send_text(subscriber, thought.title, thought.id)

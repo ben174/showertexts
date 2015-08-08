@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-# custom_settings overrides this in production
+# environment variable overrides this in production, yo
 SECRET_KEY = 'i&s4g$@%7ql$3605y+2xw8w$*v-)p8kz5#8wch%h3jxvs*i@tn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -72,12 +72,24 @@ WSGI_APPLICATION = 'showertexts.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # Internationalization
@@ -93,6 +105,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+if 'DJANGO_ADMIN_PASSWORD' in os.environ:
+    ACCOUNT_SID = os.environ['TWILIO_SID']
+    ACCOUNT_TOKEN = os.environ['TWILIO_TOKEN']
+    ADMIN_PASSWORD = os.environ['DJANGO_ADMIN_PASSWORD']
+
+if 'DJANGO_SECRET_KEY' in os.environ:
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
@@ -102,3 +121,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+# load custom settings if they exist. this looks anywhere in the path
+try:
+    from custom_settings import *
+    print "Using custom_settings file."
+except ImportError:
+    pass

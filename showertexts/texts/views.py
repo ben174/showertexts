@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from util import texter
 
 from texts import models
@@ -13,6 +13,6 @@ def subscribe(request):
         sms_number = request.POST.get('sms_number', None)
         subscriber = models.Subscriber.objects.create(sms_number=sms_number)
         texter.send_initial_text(subscriber)
-        return HttpResponse("Cool, you're subscribed")
-    return HttpResponse("Please, POST.")
+        return HttpResponse('Cool, you\'re subscribed.')
+    return HttpResponseRedirect("/")
 
