@@ -57,9 +57,10 @@ docs/_build/
 target/
 
 venv
-settings.py
+custom_settings.py
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+db.sqlite3
