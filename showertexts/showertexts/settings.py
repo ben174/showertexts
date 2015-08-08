@@ -53,7 +53,7 @@ ROOT_URLCONF = 'showertexts.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates',],
+        'DIRS': ['templates','/opt/python/current/app/showertexts/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
