@@ -8,8 +8,11 @@ client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
 def main():
     r = praw.Reddit(user_agent='shower_texts')
-    submissions = r.get_subreddit('showerthoughts').get_top(limit=2)
-    #  params = {'t': 'all'}
+    params = {}
+    all_time = False
+    if all_time:
+        params['t'] = 'all'
+    submissions = r.get_subreddit('showerthoughts').get_top(limit=2, params=params)
     submission = submissions.next()
     submission = submissions.next()
     for number in SUBSCRIBERS:
