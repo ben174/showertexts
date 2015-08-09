@@ -90,3 +90,11 @@ h5 {
     color: #779;
     margin-bottom: 150px;
 }
+
+#thought {
+    font-size: 1.3em;
+    margin-bottom: 0px;
+    color: #6D2169;
+    min-height: 100px;
+    margin-top: 53px;
+}
