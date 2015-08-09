@@ -6,6 +6,7 @@ thoughts = [
   'Waterboarding at Guantanamo Bay sounds super rad if you don\'t know what either of those things are.',
   'When Sweden is playing Denmark, it is SWE-DEN. The remaining letters, not used, is DEN-MARK.',
   'April Fool\'s Day is the one day of the year when people critically evaluate news articles before accepting them as true.',
+  'If Obama was the president of Kenya, he would be their first white president.',
   'I have never once hit the space bar while watching a YouTube video with the intention of scrolling halfway down the page',
   'Maybe "Are You Smarter Than a 5th Grader?" isn\'t a show that displays how stupid grown adults can be, but rather, a show that depicts how much useless information we teach grade schoolers that won\'t be retained or applicable later in life.',
   'The object of golf is to play the least amout of golf.',
