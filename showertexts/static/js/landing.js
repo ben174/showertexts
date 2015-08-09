@@ -1,7 +1,38 @@
 $(function() {
   $("#subscribe").click(subscribe);
   setInterval(rotateThought, 6000);
+  setInterval(updateCount, 10000);
+  updateCount();
 });
+
+var thoughtIndex = 0;
+
+function rotateThought() {
+  $("#thought").removeClass('bounceInRight').addClass('bounceOutLeft');
+  setTimeout(moveInThought, 1000);
+}
+
+function updateCount() {
+  $.get("/count", function(data) {
+    $("#count").text(data)
+  });
+}
+
+function moveInThought() {
+  $("#thought").text(thoughts[thoughtIndex]).removeClass('bounceOutLeft').addClass('bounceInRight');
+  thoughtIndex++;
+  if(thoughtIndex > thoughts.length) {
+    thoughtIndex = 0;
+  }
+}
+
+function subscribe() {
+  $("#heading").removeClass('rubberBand').addClass('bounceOutLeft');
+  $.post("/subscribe", {'sms_number': $('#sms_number').val()}, function(data) {
+    $("#heading").removeClass('bounceOutLeft').html("<a href='#'>" + data + "</a>").addClass('bounceInLeft');
+  });
+}
+
 thoughts = [
   'Waterboarding at Guantanamo Bay sounds super rad if you don\'t know what either of those things are.',
   'When Sweden is playing Denmark, it is SWE-DEN. The remaining letters, not used, is DEN-MARK.',
@@ -44,21 +75,3 @@ thoughts = [
   'Cowboys that ride off into the sunset quickly run out of daylight and have to camp just outside of town. Probably should\'ve just stayed put for the night instead of being all dramatic.',
   'That Google Chrome "what tab is being noisy?" speaker icon should function as a mute button.',
 ]
-var thoughtIndex = 0;
-function rotateThought() {
-  $("#thought").removeClass('bounceInRight').addClass('bounceOutLeft');
-  setTimeout(moveInThought, 1000);
-}
-function moveInThought(){
-  $("#thought").text(thoughts[thoughtIndex]).removeClass('bounceOutLeft').addClass('bounceInRight');
-  thoughtIndex++;
-  if(thoughtIndex > thoughts.length) {
-    thoughtIndex = 0;
-  }
-}
-function subscribe() {
-  $("#heading").removeClass('rubberBand').addClass('bounceOutLeft');
-  $.post("/subscribe", {'sms_number': $('#sms_number').val()}, function(data) {
-    $("#heading").removeClass('bounceOutLeft').html("<a href='#'>" + data + "</a>").addClass('bounceInLeft');
-  });
-}

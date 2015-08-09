@@ -18,8 +18,7 @@ def home(request):
 
 # Create your views here.
 def new_home(request):
-    subscriber_count = Subscriber.objects.count()
-    return render(request, 'newhome.html', {'subscriber_count': subscriber_count})
+    return render(request, 'newhome.html')
 
 def trigger(request):
     trigger_pass = request.GET.get('p', None)
@@ -50,3 +49,6 @@ def subscribe(request):
         return HttpResponse('Cool! Check your phone!')
     return HttpResponseRedirect("/")
 
+def count(request):
+    subscriber_count = Subscriber.objects.count()
+    return HttpResponse(str(subscriber_count), 'text/plain')
