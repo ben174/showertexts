@@ -25,7 +25,9 @@ SECRET_KEY = 'i&s4g$@%7ql$3605y+2xw8w$*v-)p8kz5#8wch%h3jxvs*i@tn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.showertexts.com'
+]
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -112,6 +114,7 @@ if 'DJANGO_ADMIN_PASSWORD' in os.environ:
     AUTH_TOKEN = os.environ['TWILIO_TOKEN']
     ADMIN_PASSWORD = os.environ['DJANGO_ADMIN_PASSWORD']
     TRIGGER_PASSWORD = os.environ['TRIGGER_PASSWORD']
+    DEBUG = False
 
 if 'DJANGO_SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ['SECRET_KEY']
