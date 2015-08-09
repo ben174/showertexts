@@ -1,18 +1,38 @@
+{% load staticfiles %}
 <!-- index.html -->
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>Hello React</title>
-    <script data-main="static/js/main" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link href="{% static 'css/new.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
 
   </head>
   <body>
-    <div id="content"></div>
+    <div id="main">
+      <h1 id="heading" class="animated rubberBand"><a href="http://www.showertexts.com">ShowerTexts</a></h1>
+      <h3>Your daily dose of ShowerThoughts - sent directly to your phone.</h3>
+      <input type="text" placeholder="Mobile Number (e.g. 415-867-5309)" id="sms_number"><br />
+      <a id="subscribe" href="#">Send me a daily shower thought</a>
+      <h4>I'm doing this just for fun. No strings attached. I hate spam and I'd never ever send spam or share your number.</h4>
+    </div>
     <script type="text/jsx">
       // Your code here
       </script>
     <script>
+
+      $(function() {
+        $("#subscribe").click(subscribe);
+
+      });
+      function subscribe() {
+        $("#heading").removeClass('rubberBand').html("<a href='#'>Cool! Check your phone!</a>").addClass('bounceInLeft');
+        $.post("/subscribe", {'sms_number': $('#sms_number').val()}, function() {
+
+        });
+      }
 
 
     </script>

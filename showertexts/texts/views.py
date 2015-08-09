@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 from texts.models import Subscriber
 from util import texter
 
@@ -33,9 +34,13 @@ def trigger(request):
         send_text(subscriber, thought.title, thought.id)
     return HttpResponse(ret, 'text/plain')
 
+@csrf_exempt
 def subscribe(request):
     if request.method == 'POST':
         sms_number = request.POST.get('sms_number', None)
+        if not sms_number:
+            return HttpResponse('You sent nothing yo.')
+        sms_number = filter(str.isdigit, str(sms_number))
         try:
             subscriber = models.Subscriber.objects.create(sms_number=sms_number)
         except IntegrityError:
