@@ -46,6 +46,6 @@ def subscribe(request):
         except IntegrityError:
             return HttpResponse('You\'re already subscribed, yo.')
         texter.send_initial_text(subscriber)
-        return HttpResponse('Cool, you\'re subscribed.')
+        return HttpResponse('Cool! Check your phone!')
     return HttpResponseRedirect("/")
 
