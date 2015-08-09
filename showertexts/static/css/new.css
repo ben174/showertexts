@@ -10,7 +10,7 @@ html {
 }
 body {
   height: 100%;
-  background: #444;
+  background: #504873;
   color: #fffce1;
   font-family: 'Raleway', Arial, sans-serif;
 }
@@ -87,8 +87,10 @@ input {
 
 h3, h4 {
     color: #777;
+    margin-bottom: 30px;
 }
 
 h5 {
     color: #779;
+    margin-bottom: 150px;
 }
