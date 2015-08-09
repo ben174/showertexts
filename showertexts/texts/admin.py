@@ -1,3 +1,4 @@
 from django.contrib import admin
+from texts.models import Subscriber, TextSend
 
-# Register your models here.
+admin.site.register([Subscriber, TextSend])
