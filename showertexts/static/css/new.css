@@ -22,13 +22,6 @@ a:hover,
 a:focus {
   color: #c94e50;
 }
-main {
-  height: 100%;
-  padding: 3em 2em;
-  text-align: center;
-  background: #b4bad2;
-  overflow: scroll;
-}
 h1 {
   font-weight: 800;
   font-size: 3.75em;
@@ -45,7 +38,9 @@ h2 {
   text-align: center;
   background: #b4bad2;
   overflow: scroll;
-    margin: 20px;
+  margin: 20px;
+  background-image: url('/static/img/shower-dude.png');
+  background-repeat: no-repeat;
 }
 a:hover, a:focus {
     color: #c94e50;
@@ -60,7 +55,7 @@ a {
 #subscribe {
     display: inline-block;
     margin: 0.75em;
-    padding: 1.35em 1.1em;
+    padding: 0.55em 1.1em;
     width: 26em;
     background: #fffce1;
     text-transform: uppercase;
@@ -71,8 +66,9 @@ a {
     border-bottom-right-radius: 20px 50px;
     border-bottom-left-radius: 20px 50px;
     cursor: pointer;
-
+    margin-top: 24px;
 }
+
 a:active, a:hover {
     outline: 0;
 }
