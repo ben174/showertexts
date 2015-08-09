@@ -30,8 +30,9 @@
       });
 
       function subscribe() {
+        $("#heading").removeClass('rubberBand').addClass('bounceOutLeft');
         $.post("/subscribe", {'sms_number': $('#sms_number').val()}, function(data) {
-          $("#heading").removeClass('rubberBand').html("<a href='#'>" + data + "</a>").addClass('bounceInLeft');
+          $("#heading").removeClass('bounceOutLeft').html("<a href='#'>" + data + "</a>").addClass('bounceInLeft');
         });
       }
     </script>
