@@ -1,2 +1,3 @@
+# The newline at the end of this file is extremely important.  Cron won't run without it.
+* * * * * root source /opt/python/run/venv/bin/activate && python /opt/python/current/app/showertexts/manage.py send_texts
 
-source /opt/python/run/venv/bin/activate && python /opt/python/current/app/showertexts/manage.py send_texts"
