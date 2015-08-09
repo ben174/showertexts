@@ -7,7 +7,11 @@ from texts import models
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html') 
+    return render(request, 'home.html')
+
+# Create your views here.
+def new_home(request):
+    return render(request, 'newhome.html')
 
 def subscribe(request):
     if request.method == 'POST':
