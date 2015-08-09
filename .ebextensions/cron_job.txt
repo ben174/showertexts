@@ -1,2 +1,2 @@
 
-source /opt/python/run/venv/bin/activate && python /opt/python/current/app/showertexts/showertexts/manage.py send_texts"
+source /opt/python/run/venv/bin/activate && python /opt/python/current/app/showertexts/manage.py send_texts"
