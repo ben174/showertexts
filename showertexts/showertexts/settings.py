@@ -105,10 +105,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+TRIGGER_PASSWORD = 'none'
+
 if 'DJANGO_ADMIN_PASSWORD' in os.environ:
     ACCOUNT_SID = os.environ['TWILIO_SID']
     AUTH_TOKEN = os.environ['TWILIO_TOKEN']
     ADMIN_PASSWORD = os.environ['DJANGO_ADMIN_PASSWORD']
+    TRIGGER_PASSWORD = os.environ['TRIGGER_PASSWORD']
 
 if 'DJANGO_SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ['SECRET_KEY']

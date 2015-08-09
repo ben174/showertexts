@@ -1,5 +1,6 @@
 from django.conf import settings
 import praw
+from twilio import TwilioRestException
 from twilio.rest import TwilioRestClient
 from texts.models import TextSend, Subscriber
 import logging
@@ -26,11 +27,15 @@ def send_initial_text(subscriber):
     send_text(subscriber, thought.title, thought.id)
 
 def send_text(subscriber, message, post_id):
-    client.messages.create(
-        to=subscriber.sms_number,
-        from_="+14152002895",
-        body=message,
-    )
+    try:
+        client.messages.create(
+            to=subscriber.sms_number,
+            from_="+14152002895",
+            body=message,
+        )
+    except TwilioRestException as e:
+        logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
+
     TextSend.objects.create(
         subscriber=subscriber,
         post_id=post_id,
