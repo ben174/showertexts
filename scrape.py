@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import praw
 from twilio.rest import TwilioRestClient
-from custom_settings import ACCOUNT_SID, AUTH_TOKEN, SUBSCRIBERS
+from settings import ACCOUNT_SID, AUTH_TOKEN, SUBSCRIBERS
 
 
 client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
