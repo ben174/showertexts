@@ -9,16 +9,12 @@ from util import texter
 
 from texts import models
 
-# Create your views here.
 from util.texter import get_thought, send_text
 
 
-def home(request):
-    return render(request, 'home.html')
-
 # Create your views here.
-def new_home(request):
-    return render(request, 'newhome.html')
+def landing(request):
+    return render(request, 'landing.html')
 
 def trigger(request):
     trigger_pass = request.GET.get('p', None)
