@@ -4,15 +4,15 @@ from django.db import IntegrityError
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from twilio import TwilioRestException
 from texts.models import Subscriber
 from util import texter
 
 from texts import models
 
-from util.texter import get_thought, send_text
+from util.texter import get_thought, send_text, DuplicateTextException
 
 
-# Create your views here.
 def landing(request):
     return render(request, 'landing.html')
 
@@ -27,7 +27,14 @@ def trigger(request):
     ret += thought.url + '\n'
     for subscriber in Subscriber.objects.filter(active=True):
         ret += 'Sending text to: ' + str(subscriber) + "\n"
-        send_text(subscriber, thought.title, thought.id)
+        try:
+            send_text(subscriber, thought.title, thought.id)
+            ret += ' - Success\n'
+        except DuplicateTextException as ex:
+            ret += ' - Duplicate text. Won\'t send.\n'
+        except TwilioRestException as e:
+            logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
+            ret += ' - Exception sending text: ' + e.message
     return HttpResponse(ret, 'text/plain')
 
 @csrf_exempt

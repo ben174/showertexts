@@ -13,3 +13,6 @@ class TextSend(models.Model):
     date_sent = models.DateTimeField(auto_now_add=True)
     post_id = models.CharField(max_length=20)
     message_text = models.CharField(max_length=500)
+
+    def __unicode__(self):
+        return self.subscriber.sms_number + ": " + self.post_id + ' - ' + self.message_text
