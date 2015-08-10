@@ -30,11 +30,11 @@ def trigger(request):
         try:
             send_text(subscriber, thought.title, thought.id)
             ret += ' - Success\n'
-        except DuplicateTextException as ex:
+        except DuplicateTextException:
             ret += ' - Duplicate text. Won\'t send.\n'
-        except TwilioRestException as e:
-            logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
-            ret += ' - Exception sending text: ' + e.message
+        except TwilioRestException as ex:
+            logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(ex))
+            ret += ' - Exception sending text: ' + str(ex) + '\n'
     return HttpResponse(ret, 'text/plain')
 
 @csrf_exempt
