@@ -18,6 +18,9 @@ a {
   color: #4e4a46;
   text-decoration: none;
 }
+h1>a {
+  color: #902A2B;
+}
 a:hover,
 a:focus {
   color: #c94e50;
