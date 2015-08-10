@@ -1,21 +1,11 @@
+import logging
+
 from django.conf import settings
-import praw
 from twilio import TwilioRestException
 from twilio.rest import TwilioRestClient
 from texts.models import TextSend, Subscriber
-import logging
+from util.showerthoughts import get_todays_thought
 
-client = TwilioRestClient(settings.ACCOUNT_SID, settings.AUTH_TOKEN)
-
-def get_thought(today=True, rank=1):
-    r = praw.Reddit(user_agent='shower_texts')
-    params = {}
-    if not today:
-        params['t'] = 'all'
-    submissions = r.get_subreddit('showerthoughts').get_top(limit=rank, params=params)
-    for _ in range(rank):
-        submission = submissions.next()
-    return submission
 
 def send_initial_text(subscriber):
     message = "Cool! You'll start receiving Shower Texts daily. " \
@@ -25,13 +15,15 @@ def send_initial_text(subscriber):
         send_text(subscriber, message, 'initial')
     except TwilioRestException as e:
         logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
-    thought = get_thought()
+    thought = get_todays_thought()
     try:
-        send_text(subscriber, thought.title, thought.id)
+        send_text(subscriber, thought.thought_text, thought.post_id)
     except TwilioRestException as e:
         logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
 
+
 def send_text(subscriber, message, post_id):
+    client = TwilioRestClient(settings.ACCOUNT_SID, settings.AUTH_TOKEN)
     if TextSend.objects.filter(subscriber=subscriber, post_id=post_id).exists():
         logging.warning('Attempted to send a duplicate text. Won\'t do it.')
         raise DuplicateTextException()
@@ -46,11 +38,23 @@ def send_text(subscriber, message, post_id):
         message_text=message,
     )
 
+
 def send_todays_texts():
-    thought = get_thought()
+    ret = ""
+    thought = get_todays_thought()
+    ret += 'Today\'s thought: ' + thought.thought_text + '\n'
+    ret += thought.url + '\n'
     for subscriber in Subscriber.objects.filter(active=True):
-        logging.info('Sending text to: ' + str(subscriber))
-        send_text(subscriber, thought.title, thought.id)
+        ret += 'Sending text to: ' + str(subscriber) + "\n"
+        try:
+            send_text(subscriber, thought.thought_text, thought.post_id)
+            ret += ' - Success\n'
+        except DuplicateTextException:
+            ret += ' - Duplicate text. Won\'t send.\n'
+        except TwilioRestException as ex:
+            logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(ex))
+            ret += ' - Exception sending text: ' + str(ex) + '\n'
+    return ret
 
 class DuplicateTextException(Exception):
     pass
