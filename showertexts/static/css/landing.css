@@ -10,7 +10,7 @@ html {
 }
 body {
   height: 100%;
-  background: #504873;
+  background: #736D48;
   color: #fffce1;
   font-family: 'Raleway', Arial, sans-serif;
 }
@@ -39,11 +39,9 @@ h2 {
   height: 100%;
   padding: 3em 2em;
   text-align: center;
-  background: #b4bad2;
   overflow: scroll;
   margin: 20px;
-  background-image: url('/static/img/shower-dude.png');
-  background-repeat: no-repeat;
+  background: #B4D2BE url('/static/img/shower-dude.png') no-repeat;
 }
 a:hover, a:focus {
     color: #c94e50;
@@ -57,19 +55,15 @@ a {
 }
 #subscribe {
     display: inline-block;
-    margin: 0.75em;
     padding: 0.55em 1.1em;
     width: 26em;
     background: #fffce1;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 800;
-    border-top-left-radius: 20px 50px;
-    border-top-right-radius: 20px 50px;
-    border-bottom-right-radius: 20px 50px;
-    border-bottom-left-radius: 20px 50px;
+    border-radius: 20px 50px;
     cursor: pointer;
-    margin-top: 24px;
+    margin: 24px 0.75em 0.75em;
 }
 
 a:active, a:hover {
@@ -90,14 +84,18 @@ h3, h4 {
 }
 
 h5 {
-    color: #779;
+    color: #4D6944;
     margin-bottom: 150px;
+}
+
+h5>a {
+    color: #7D7635;
 }
 
 #thought {
     font-size: 1.3em;
     margin-bottom: 0px;
-    color: #6D2169;
+    color: #6D2121;
     min-height: 100px;
     margin-top: 53px;
 }
