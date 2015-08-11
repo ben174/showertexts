@@ -13,6 +13,8 @@ class TextSend(models.Model):
     date_sent = models.DateTimeField(auto_now_add=True)
     post_id = models.CharField(max_length=20)
     message_text = models.CharField(max_length=500)
+    result_message = models.CharField(max_length=500, null=True, blank=True)
+    sucess = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.subscriber.sms_number + ": " + self.post_id + ' - ' + self.message_text
@@ -21,7 +23,7 @@ class ShowerThought(models.Model):
     date = models.DateField(auto_now_add=True)
     post_id = models.CharField(max_length=20)
     thought_text = models.CharField(max_length=500)
-    url = models.URLField(max_length=100)
+    url = models.URLField(max_length=300, null=True, blank=True)
     active = models.BooleanField(default=True)
 
     def __unicode__(self):
