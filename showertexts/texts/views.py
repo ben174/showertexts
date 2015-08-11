@@ -9,6 +9,7 @@ from twilio import TwilioRestException
 from util import texter
 
 from texts import models
+from util.showerthoughts import get_todays_thought
 from util.texter import DuplicateTextException
 
 
@@ -24,6 +25,9 @@ def trigger(request):
     ret = texter.send_todays_texts()
     return HttpResponse(ret, 'text/plain')
 
+def today(request):
+    thought = get_todays_thought()
+    return HttpResponse(thought.thought_text, 'text/plain')
 
 @csrf_exempt
 def subscribe(request):

@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^subscribe$', texts.views.subscribe),
     url(r'^count$', texts.views.count),
     url(r'^trigger$', texts.views.trigger),
+    url(r'^today$', texts.views.today),
     url(r'^admin/', include(admin.site.urls)),
 ]
