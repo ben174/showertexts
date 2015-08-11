@@ -114,7 +114,7 @@ if 'DJANGO_ADMIN_PASSWORD' in os.environ:
     AUTH_TOKEN = os.environ['TWILIO_TOKEN']
     ADMIN_PASSWORD = os.environ['DJANGO_ADMIN_PASSWORD']
     TRIGGER_PASSWORD = os.environ['TRIGGER_PASSWORD']
-    DEBUG = os.environ.get('DEBUG', False)
+    DEBUG = bool(os.environ.get('DEBUG', False))
 
 if 'DJANGO_SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ['SECRET_KEY']
