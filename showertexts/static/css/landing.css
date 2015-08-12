@@ -30,10 +30,10 @@ h1 {
   font-size: 3.75em;
 }
 h2 {
-  max-width: 20em;
-  margin: 0 auto;
-  line-height: 1.3em;
-  font-weight: 400;
+    max-width: 44em;
+    margin: 2em auto;
+    font-size: 1.2em;
+    color: #7F5C5C;
 }
 #main {
   height: 100%;
@@ -99,3 +99,4 @@ h5>a {
     min-height: 100px;
     margin-top: 53px;
 }
+
