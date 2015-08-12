@@ -3,10 +3,16 @@ $(function() {
   setInterval(rotateThought, 6000);
   setInterval(updateCount, 10000);
   updateCount();
+  $("#sms_number").keyup(smsNumberKeyup);
 });
 
 var thoughtIndex = 0;
-
+function smsNumberKeyup(event){
+    if(event.keyCode == 13){
+        $("#subscribe").focus();
+        subscribe();
+    }
+}
 function rotateThought() {
   $("#thought").removeClass('bounceInRight').addClass('bounceOutLeft');
   setTimeout(moveInThought, 1000);
