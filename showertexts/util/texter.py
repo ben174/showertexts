@@ -24,14 +24,27 @@ def send_initial_text(subscriber):
 
 def send_text(subscriber, message, post_id):
     client = TwilioRestClient(settings.ACCOUNT_SID, settings.AUTH_TOKEN)
+
     if TextSend.objects.filter(subscriber=subscriber, post_id=post_id).exists():
         logging.warning('Attempted to send a duplicate text. Won\'t do it.')
         raise DuplicateTextException()
-    client.messages.create(
-        to=subscriber.sms_number,
-        from_="+14152002895",
-        body=message,
-    )
+    try:
+        client.messages.create(
+            to=subscriber.sms_number,
+            from_="+14152002895",
+            body=message,
+        )
+    except TwilioRestException as e:
+        logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
+        TextSend.objects.create(
+            subscriber=subscriber,
+            post_id=post_id,
+            message_text=message,
+            success=False,
+            result_message=str(e),
+        )
+        #TODO: Toggle active state here
+        raise e
     TextSend.objects.create(
         subscriber=subscriber,
         post_id=post_id,
