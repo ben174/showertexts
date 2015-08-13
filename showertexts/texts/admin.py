@@ -20,5 +20,11 @@ class SubscriberAdmin(admin.ModelAdmin):
     inlines = [
         TextSendInline,
     ]
+    search_fields = ('sms_number',)
 
-admin.site.register([TextSend, ])
+
+@admin.register(TextSend)
+class TextSendAdmin(admin.ModelAdmin):
+    list_display = ('date_sent', 'subscriber', 'message_text', 'sucess', 'result_message')
+    list_filter = ('date_sent', 'sucess')
+
