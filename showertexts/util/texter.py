@@ -43,7 +43,9 @@ def send_text(subscriber, message, post_id):
             sucess=False,
             result_message=str(e),
         )
-        #TODO: Toggle active state here
+        if 'not a valid phone number' in str(e):
+            subscriber.active = False
+            subscriber.save()
         raise e
     TextSend.objects.create(
         subscriber=subscriber,

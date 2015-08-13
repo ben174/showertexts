@@ -54,5 +54,5 @@ def subscribe(request):
 
 
 def count(request):
-    subscriber_count = Subscriber.objects.count()
+    subscriber_count = Subscriber.objects.filter(active=True).count()
     return HttpResponse(str(subscriber_count), 'text/plain')
