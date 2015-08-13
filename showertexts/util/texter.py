@@ -40,7 +40,7 @@ def send_text(subscriber, message, post_id):
             subscriber=subscriber,
             post_id=post_id,
             message_text=message,
-            success=False,
+            sucess=False,
             result_message=str(e),
         )
         #TODO: Toggle active state here
