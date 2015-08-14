@@ -43,7 +43,7 @@ def send_text(subscriber, message, post_id):
             sucess=False,
             result_message=str(e),
         )
-        if 'not a valid phone number' in str(e):
+        if 'not a valid phone number' in str(e) or 'violates a blacklist rule' in str(e):
             subscriber.active = False
             subscriber.save()
         raise e
