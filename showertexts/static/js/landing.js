@@ -69,4 +69,5 @@ thoughts = [
   'The real unsung hero in School Of Rock is the promoter who got about 2,000 people to a local Battle Of The Bands on a weekday morning.',
   'Coming from a big family, I don\'t know what is more sad - That one of us will have to go to seven funerals, or that one of us won\'t have to go to any.',
   'In the future, imagine how many Go-Pros will be found in snow mountains containing the last moments of peoples lives.',
+  'Since smart watches can now read your pulse, there should be a feature that erases your browser history if your heart stops beating.',
 ]
