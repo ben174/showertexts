@@ -9,6 +9,8 @@ def _validate(submission):
     """
     if '/r/' in submission.title:
         return False
+    if 'reddit' in submission.title:
+        return False
     return True
 
 
