@@ -8,7 +8,7 @@ from util.showerthoughts import get_todays_thought
 
 
 def send_initial_text(subscriber):
-    message = "Cool! You'll start receiving Shower Texts daily. " \
+    message = "Cool! Welcome to ShowerTexts.com! You'll start receiving Shower Texts daily. " \
         "Reply STOP at any time if you get sick of them. " \
         "Your first one will follow..."
     try:
