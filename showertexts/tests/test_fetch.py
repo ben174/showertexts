@@ -1,4 +1,5 @@
 import unittest
+import datetime
 from texts.models import ShowerThought, Subscriber
 from util import texter
 import util.showerthoughts
@@ -18,13 +19,20 @@ class TestSubscriber(unittest.TestCase):
 
     def test_send_all(self):
         subscriber = Subscriber.objects.create(sms_number='2096223425')
+        expired_date = datetime.datetime.now() - datetime.timedelta(days=20)
+        subscriber.date_created = expired_date
+        subscriber.date_renewed = expired_date
         ret = texter.send_todays_expirations()
+        assert subscriber.expired
         ret += texter.send_todays_texts()
+        print ret
         assert 'Success' in ret
 
     def test_expired_subscription(self):
         subscriber = Subscriber.objects.create(sms_number='2096223425')
-        subscriber.expired = True
+        expired_date = datetime.datetime.now() - datetime.timedelta(days=20)
+        subscriber.date_created = expired_date
+        subscriber.date_renewed = expired_date
         ret = texter.send_todays_texts()
         print 'exxpired'
         print ret

@@ -40,11 +40,12 @@ def send_text(subscriber, message, post_id):
         message_text=message,
     )
 
+
 def send_todays_expirations():
     ret = "EXPIRATIONS:\n"
-    expiry_date = datetime.datetime.now-datetime.timedelta(days=14)
-    expiring_subscribers = Subscriber.objects.filter(active=True, expired=False, date_renewed__lte=expiry_date)
-    expiring_subscribers.update(expired=True)
+    expiry_date = datetime.datetime.now() - datetime.timedelta(days=14)
+    expiring_subscribers = Subscriber.objects.filter(active=True, date_renewed__lte=expiry_date)
+    expiring_subscribers.update(active=False)
     notice = 'HOUSE KEEPING! I\'m clearing out old numbers to make room for more. If you like these, please ' \
              'resubscribe for free! http://www.showertexts.com'
     post_id = 'EXP-' + str(datetime.date.today())
@@ -61,12 +62,13 @@ def send_todays_expirations():
             ret += ' - Exception sending text: ' + str(ex) + '\n'
     return ret
 
+
 def send_todays_texts():
     ret = "SHOWER TEXTS:\n"
     thought = get_todays_thought()
     ret += 'Today\'s thought: ' + thought.thought_text + '\n'
     ret += thought.url + '\n'
-    for subscriber in Subscriber.objects.filter(active=True, expired=False):
+    for subscriber in Subscriber.objects.filter(active=True):
         ret += 'Sending text to: ' + str(subscriber) + "\n"
         try:
             send_text(subscriber, thought.thought_text, thought.post_id)
@@ -77,6 +79,7 @@ def send_todays_texts():
             logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(ex))
             ret += ' - Exception sending text: ' + str(ex) + '\n'
     return ret
+
 
 class DuplicateTextException(Exception):
     pass

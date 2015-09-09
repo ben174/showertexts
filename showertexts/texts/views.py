@@ -40,7 +40,6 @@ def subscribe(request):
         if not created:
             if subscriber.expired:
                 # yay! a renewal
-                subscriber.expired = False
                 subscriber.date_renewed = datetime.datetime.now()
                 subscriber.save()
                 texter.send_initial_text(subscriber)
@@ -73,5 +72,5 @@ def subscribe(request):
 
 
 def count(request):
-    subscriber_count = Subscriber.objects.filter(active=True, expired=False).count()
+    subscriber_count = Subscriber.objects.filter(active=True).count()
     return HttpResponse(str(subscriber_count), 'text/plain')
