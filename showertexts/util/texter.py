@@ -8,21 +8,6 @@ from texts.models import TextSend, Subscriber
 from util.showerthoughts import get_todays_thought
 
 
-def send_initial_text(subscriber):
-    message = "Cool! Welcome to ShowerTexts.com! You'll start receiving Shower Texts daily. " \
-        "Reply STOP at any time if you get sick of them. " \
-        "Your first one will follow..."
-    try:
-        send_text(subscriber, message, 'initial')
-    except TwilioRestException as e:
-        logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
-    thought = get_todays_thought()
-    try:
-        send_text(subscriber, thought.thought_text, thought.post_id)
-    except TwilioRestException as e:
-        logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
-
-
 def send_text(subscriber, message, post_id):
     client = TwilioRestClient(settings.ACCOUNT_SID, settings.AUTH_TOKEN)
 

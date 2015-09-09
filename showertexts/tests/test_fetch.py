@@ -18,7 +18,8 @@ class TestSubscriber(unittest.TestCase):
 
     def test_send_all(self):
         subscriber = Subscriber.objects.create(sms_number='2096223425')
-        ret = texter.send_todays_texts()
+        ret = texter.send_todays_expirations()
+        ret += texter.send_todays_texts()
         assert 'Success' in ret
 
     def test_expired_subscription(self):
