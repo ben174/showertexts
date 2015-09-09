@@ -11,8 +11,20 @@ class TestFetch(unittest.TestCase):
         print ShowerThought.objects.all()
         assert ShowerThought.objects.count() == 1
 
+
+class TestSubscriber(unittest.TestCase):
+    def setUp(self):
+        Subscriber.objects.all().delete()
+
     def test_send_all(self):
         subscriber = Subscriber.objects.create(sms_number='2096223425')
         ret = texter.send_todays_texts()
-        assert ShowerThought.objects.count() == 1
         assert 'Success' in ret
+
+    def test_expired_subscription(self):
+        subscriber = Subscriber.objects.create(sms_number='2096223425')
+        subscriber.expired = True
+        ret = texter.send_todays_texts()
+        print 'exxpired'
+        print ret
+

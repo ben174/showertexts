@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 from django.conf import settings
 from twilio import TwilioRestException
@@ -31,7 +32,7 @@ def send_text(subscriber, message, post_id):
     try:
         client.messages.create(
             to=subscriber.sms_number,
-            from_="+14152002895",
+            from_=settings.TWILIO_NUMBER,
             body=message,
         )
     except TwilioRestException as e:
@@ -54,13 +55,33 @@ def send_text(subscriber, message, post_id):
         message_text=message,
     )
 
+def send_todays_expirations():
+    ret = "EXPIRATIONS:\n"
+    expiry_date = datetime.datetime.now-datetime.timedelta(days=14)
+    expiring_subscribers = Subscriber.objects.filter(active=True, expired=False, date_renewed__lte=expiry_date)
+    expiring_subscribers.update(expired=True)
+    notice = 'HOUSE KEEPING! I\'m clearing out old numbers to make room for more. If you like these, please ' \
+             'resubscribe for free! http://www.showertexts.com'
+    post_id = 'EXP-' + str(datetime.date.today())
+
+    for subscriber in expiring_subscribers:
+        ret += 'Sending expiration text to: ' + str(subscriber) + "\n"
+        try:
+            send_text(subscriber, notice, post_id)
+            ret += ' - Success\n'
+        except DuplicateTextException:
+            ret += ' - Duplicate text. Won\'t send.\n'
+        except TwilioRestException as ex:
+            logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(ex))
+            ret += ' - Exception sending text: ' + str(ex) + '\n'
+    return ret
 
 def send_todays_texts():
-    ret = ""
+    ret = "SHOWER TEXTS:\n"
     thought = get_todays_thought()
     ret += 'Today\'s thought: ' + thought.thought_text + '\n'
     ret += thought.url + '\n'
-    for subscriber in Subscriber.objects.filter(active=True):
+    for subscriber in Subscriber.objects.filter(active=True, expired=False):
         ret += 'Sending text to: ' + str(subscriber) + "\n"
         try:
             send_text(subscriber, thought.thought_text, thought.post_id)
