@@ -1,5 +1,7 @@
 import unittest
 import datetime
+from django.conf import settings
+from django.utils import timezone
 from texts.models import ShowerThought, Subscriber
 from util import texter
 import util.showerthoughts
@@ -19,7 +21,7 @@ class TestSubscriber(unittest.TestCase):
 
     def test_send_all(self):
         subscriber = Subscriber.objects.create(sms_number='2096223425')
-        expired_date = datetime.datetime.now() - datetime.timedelta(days=20)
+        expired_date = timezone.now() - datetime.timedelta(days=settings.EXPIRATION_DAYS+5)
         subscriber.date_created = expired_date
         subscriber.date_renewed = expired_date
         ret = texter.send_todays_expirations()
@@ -30,10 +32,13 @@ class TestSubscriber(unittest.TestCase):
 
     def test_expired_subscription(self):
         subscriber = Subscriber.objects.create(sms_number='2096223425')
-        expired_date = datetime.datetime.now() - datetime.timedelta(days=20)
+        expired_date = timezone.now() - datetime.timedelta(days=settings.EXPIRATION_DAYS+5)
         subscriber.date_created = expired_date
         subscriber.date_renewed = expired_date
-        ret = texter.send_todays_texts()
-        print 'exxpired'
+        subscriber.save()
+        ret = texter.send_todays_expirations()
+        ret += texter.send_todays_texts()
+
+        print 'exxp'
         print ret
 

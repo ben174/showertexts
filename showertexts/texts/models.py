@@ -1,5 +1,7 @@
 import datetime
+from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 
 class Subscriber(models.Model):
@@ -13,7 +15,7 @@ class Subscriber(models.Model):
     def expired(self):
         if self.lifetime:
             return False
-        return self.date_renewed > datetime.datetime.now() - datetime.timedelta(days=14)
+        return self.date_renewed > timezone.now() - datetime.timedelta(days=settings.EXPIRATION_DAYS)
 
     def __unicode__(self):
         return self.sms_number
