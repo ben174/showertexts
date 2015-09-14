@@ -1,3 +1,7 @@
 # showertexts
-Maybe I'm getting old. It seems the only part of Reddit I enjoy anymore is /r/showerthoughts. 
-I created this site so I could have the top post in /r/showerthoughts texted to me each day. 
+
+Shower Thoughts are itty-bitty witty bite-sized clever thoughts. This is a site which will automatically text you the Internet's most popular Shower Thought each day.
+
+###http://www.showertexts.com
+
+![showertexts.com home page](http://i.imgur.com/DTEaJIL.png "ShowerTexts.com")
