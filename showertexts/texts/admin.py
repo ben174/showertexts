@@ -9,18 +9,19 @@ class TextSendInline(admin.TabularInline):
 
 @admin.register(ShowerThought)
 class ShowerThoughtAdmin(admin.ModelAdmin):
-    list_display = ('date', 'thought_text', 'post_id', 'active', )
-    list_filter = ('date', 'active', )
+    list_display = ('date', 'thought_text', 'post_id', 'active')
 
 
 @admin.register(Subscriber)
 class SubscriberAdmin(admin.ModelAdmin):
-    list_display = ('sms_number', 'date_created', 'active', )
+    readonly_fields = ('date_created', 'date_renewed')
+
+    list_display = ('sms_number', 'date_created', 'active', 'expired', 'lifetime')
     inlines = [
         TextSendInline,
     ]
     search_fields = ('sms_number', )
-    list_filter = ('active', )
+    list_filter = ('active',)
 
 
 @admin.register(TextSend)
