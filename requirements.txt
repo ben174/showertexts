@@ -13,6 +13,7 @@ httplib2==0.9.1
 jmespath==0.7.1
 pathspec==0.3.3
 praw==3.2.1
+psycopg2==2.6.1
 pyasn1==0.1.8
 python-dateutil==2.4.2
 pytz==2015.4
