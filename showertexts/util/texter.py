@@ -67,7 +67,7 @@ def send_todays_texts():
     ret = []
     thought = get_todays_thought()
     for subscriber in Subscriber.objects.filter(active=True):
-        row = {'to': subscriber, 'action': 'expiration'}
+        row = {'to': subscriber, 'action': 'showertext'}
         try:
             send_text(subscriber, thought.thought_text, thought.post_id)
             row['result'] = 'Success'
