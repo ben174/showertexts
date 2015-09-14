@@ -109,6 +109,10 @@ USE_TZ = True
 
 TRIGGER_PASSWORD = 'none'
 
+EXPIRATION_DAYS = 14
+
+TWILIO_NUMBER = '+14152002895'
+
 if 'DJANGO_ADMIN_PASSWORD' in os.environ:
     ACCOUNT_SID = os.environ['TWILIO_SID']
     AUTH_TOKEN = os.environ['TWILIO_TOKEN']

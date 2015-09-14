@@ -1,25 +1,11 @@
 import logging
+import datetime
 
 from django.conf import settings
 from twilio import TwilioRestException
 from twilio.rest import TwilioRestClient
 from texts.models import TextSend, Subscriber
 from util.showerthoughts import get_todays_thought
-
-
-def send_initial_text(subscriber):
-    message = "Cool! Welcome to ShowerTexts.com! You'll start receiving Shower Texts daily. " \
-        "Reply STOP at any time if you get sick of them. " \
-        "Your first one will follow..."
-    try:
-        send_text(subscriber, message, 'initial')
-    except TwilioRestException as e:
-        logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
-    thought = get_todays_thought()
-    try:
-        send_text(subscriber, thought.thought_text, thought.post_id)
-    except TwilioRestException as e:
-        logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(e))
 
 
 def send_text(subscriber, message, post_id):
@@ -31,7 +17,7 @@ def send_text(subscriber, message, post_id):
     try:
         client.messages.create(
             to=subscriber.sms_number,
-            from_="+14152002895",
+            from_=settings.TWILIO_NUMBER,
             body=message,
         )
     except TwilioRestException as e:
@@ -55,22 +41,44 @@ def send_text(subscriber, message, post_id):
     )
 
 
+def send_todays_expirations():
+    ret = []
+    expiry_date = datetime.datetime.now() - datetime.timedelta(days=settings.EXPIRATION_DAYS)
+    expiring_subscribers = Subscriber.objects.filter(active=True, date_renewed__lte=expiry_date)
+    notice = 'HOUSE KEEPING! I\'m clearing out old numbers to make room for more. If you like these, please ' \
+             'resubscribe for free! http://www.showertexts.com'
+    post_id = 'EXP-' + str(datetime.date.today())
+    for subscriber in expiring_subscribers:
+        row = {'to': subscriber, 'action': 'expiration'}
+        try:
+            send_text(subscriber, notice, post_id)
+            row['result'] = 'Success'
+        except DuplicateTextException:
+            row['result'] = 'Duplicate'
+        except TwilioRestException as ex:
+            row['result'] = 'Exception: ' + str(ex)
+            logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(ex))
+        ret.append(row)
+    expiring_subscribers.update(active=False)
+    return ret
+
+
 def send_todays_texts():
-    ret = ""
+    ret = []
     thought = get_todays_thought()
-    ret += 'Today\'s thought: ' + thought.thought_text + '\n'
-    ret += thought.url + '\n'
     for subscriber in Subscriber.objects.filter(active=True):
-        ret += 'Sending text to: ' + str(subscriber) + "\n"
+        row = {'to': subscriber, 'action': 'showertext'}
         try:
             send_text(subscriber, thought.thought_text, thought.post_id)
-            ret += ' - Success\n'
+            row['result'] = 'Success'
         except DuplicateTextException:
-            ret += ' - Duplicate text. Won\'t send.\n'
+            row['result'] = 'Duplicate'
         except TwilioRestException as ex:
+            row['result'] = 'Exception: ' + str(ex)
             logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(ex))
-            ret += ' - Exception sending text: ' + str(ex) + '\n'
+        ret.append(row)
     return ret
+
 
 class DuplicateTextException(Exception):
     pass
