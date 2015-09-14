@@ -4,7 +4,15 @@ $(function() {
   setInterval(updateCount, 10000);
   updateCount();
   $("#sms_number").keyup(smsNumberKeyup);
+  for(var i=0;i<$('.rain').width();i+=25) {
+      var delay = getRandomInt(0, 1000);
+      $("<div />", { class: "raindrop" }).css('left', i).css('animation-delay', delay + "ms").appendTo('.rain');
+  }
 });
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 var thoughtIndex = 0;
 function smsNumberKeyup(event){

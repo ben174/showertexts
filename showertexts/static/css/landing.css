@@ -100,3 +100,29 @@ h5>a {
     margin-top: 53px;
 }
 
+#heading {
+    margin-bottom: -12px;
+}
+
+.rain {
+    margin: auto;
+    width: 400px;
+}
+
+.raindrop {
+    animation-name: drop;
+    animation-duration: 1s;
+    position: relative;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
+    width: 2px;
+    height: 10px;
+    background-color: #000055;
+    display: table-cell;
+    opacity: 0.0;
+}
+
+@keyframes drop {
+    0%   {top: 0px; opacity: 0.3;}
+    100% {top: 200px; opacity: 0.0; }
+}
