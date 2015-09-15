@@ -4,9 +4,10 @@ $(function() {
   setInterval(updateCount, 10000);
   updateCount();
   $("#sms_number").keyup(smsNumberKeyup);
-  for(var i=0;i<$('.rain').width();i+=25) {
+  for(var i=10;i<$('.rain').width()-70;i+=35) {
       var delay = getRandomInt(0, 1000);
-      $("<div />", { class: "raindrop" }).css('left', i).css('animation-delay', delay + "ms").appendTo('.rain');
+      $("<div class=\"raindrop\"><span></span></div>").css('left', i).css('animation-delay', delay + "ms").appendTo('.rain');
+
   }
 });
 
@@ -73,7 +74,6 @@ thoughts = [
   'Thanks to the Internet, I have probably seen more naked ladies than all of my ancestors combined.',
   'I wish I had a Mario Kart-like ghost of myself punctually getting ready for work in the morning so I\'d know if I was running late.',
   'I should ask my barber where he gets his hair cut, then go there and slowly make my way up the chain until I find THE GREATEST BARBER IN THE WORLD...or perhaps just a bald dude.',
-  'I used hola unblocker to watch Argo on the Canadian Netflix. I was an American who had to pretend to be Canadian to watch a movie about Americans who have to pretend to be Canadians making a movie.',
   'The real unsung hero in School Of Rock is the promoter who got about 2,000 people to a local Battle Of The Bands on a weekday morning.',
   'Coming from a big family, I don\'t know what is more sad - That one of us will have to go to seven funerals, or that one of us won\'t have to go to any.',
   'In the future, imagine how many Go-Pros will be found in snow mountains containing the last moments of peoples lives.',

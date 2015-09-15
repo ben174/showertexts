@@ -115,14 +115,29 @@ h5>a {
     position: relative;
     animation-timing-function: ease-in;
     animation-iteration-count: infinite;
-    width: 2px;
-    height: 10px;
+    width: 7px;
+    height: 7px;
     background-color: #000055;
     display: table-cell;
     opacity: 0.0;
+
+    overflow: hidden;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-top-left-radius: 50%;
+    -webkit-transform:rotate(-45deg);
+    z-index: 99;
+}
+
+.teardrop span {
+    display: block;
+    height: 120px;
+    width: 150px;
+    margin: 0 auto;
+    -webkit-transform: rotate(45deg);
 }
 
 @keyframes drop {
-    0%   {top: 0px; opacity: 0.3;}
+    0%   {top: 0px; opacity: 0.2;}
     100% {top: 200px; opacity: 0.0; }
 }
