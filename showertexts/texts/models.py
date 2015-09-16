@@ -9,6 +9,7 @@ class Subscriber(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     date_renewed = models.DateTimeField(auto_now_add=True)
+    date_renewed.editable=True
     lifetime = models.BooleanField(default=False)
 
     @property

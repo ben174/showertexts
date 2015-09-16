@@ -14,7 +14,7 @@ class ShowerThoughtAdmin(admin.ModelAdmin):
 
 @admin.register(Subscriber)
 class SubscriberAdmin(admin.ModelAdmin):
-    readonly_fields = ('date_created', 'date_renewed')
+    readonly_fields = ('date_created',)
 
     list_display = ('sms_number', 'date_created', 'active', 'expired', 'lifetime')
     inlines = [
