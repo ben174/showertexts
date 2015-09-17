@@ -4,6 +4,7 @@ import datetime
 from django.conf import settings
 from twilio import TwilioRestException
 from twilio.rest import TwilioRestClient
+
 from texts.models import TextSend, Subscriber
 from util.showerthoughts import get_todays_thought
 

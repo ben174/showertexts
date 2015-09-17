@@ -1,14 +1,13 @@
 import logging
-import datetime
+
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-from texts.models import Subscriber
 from twilio import TwilioRestException
-from util import texter
 
+from texts.models import Subscriber
+from util import texter
 from util.showerthoughts import get_todays_thought
 from util.texter import DuplicateTextException, send_text
 
