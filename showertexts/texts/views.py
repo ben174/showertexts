@@ -47,7 +47,7 @@ def subscribe_number(sms_number):
     if not created:
         if subscriber.expired:
             # yay! a renewal
-            subscriber.date_renewed = timezone.now()
+            subscriber.renew()
             subscriber.save()
             thought = get_todays_thought()
             try:

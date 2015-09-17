@@ -19,6 +19,10 @@ class Subscriber(models.Model):
         # is their renewal date before expiration_days ago?
         return date_renewed < timezone.now() - datetime.timedelta(days=settings.EXPIRATION_DAYS)
 
+    def renew(self):
+        self.date_renewed = timezone.now()
+        self.active = True
+
     def __unicode__(self):
         return self.sms_number
 

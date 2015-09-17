@@ -44,7 +44,7 @@ def send_text(subscriber, message, post_id):
 def send_todays_expirations():
     ret = []
     expiry_date = datetime.datetime.now() - datetime.timedelta(days=settings.EXPIRATION_DAYS)
-    expiring_subscribers = Subscriber.objects.filter(active=True, date_renewed__lte=expiry_date)
+    expiring_subscribers = Subscriber.objects.filter(active=True, date_renewed__lte=expiry_date, lifetime=False)
     notice = 'HOUSE KEEPING! I\'m clearing out old numbers to make room for more. If you like these, please ' \
              'resubscribe for free! http://www.showertexts.com'
     post_id = 'EXP-' + str(datetime.date.today())
