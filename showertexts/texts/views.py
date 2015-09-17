@@ -25,9 +25,11 @@ def trigger(request):
     ret += texter.send_todays_texts()
     return HttpResponse(ret, 'text/plain')
 
+
 def today(request):
     thought = get_todays_thought()
     return HttpResponse(thought.thought_text, 'text/plain')
+
 
 @csrf_exempt
 def subscribe(request):
