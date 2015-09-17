@@ -90,3 +90,7 @@ def subscribe_number(sms_number):
 def count(request):
     subscriber_count = Subscriber.objects.filter(active=True).count()
     return HttpResponse(str(subscriber_count), 'text/plain')
+
+def clear(request):
+    Subscriber.objects.update(date_renewed=None)
+    return HttpResponse(str(Subscriber.objects.all()), 'text/plain')
