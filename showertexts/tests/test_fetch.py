@@ -3,7 +3,7 @@ import datetime
 from django.conf import settings
 from django.utils import timezone
 from texts.models import ShowerThought, Subscriber, TextSend
-from texts.views import subscribe_number
+from util.subscription import subscribe
 from util import texter
 import util.showerthoughts
 
@@ -40,7 +40,7 @@ class TestSubscriber(unittest.TestCase):
         assert len(ret) == 1
         assert TextSend.objects.count() == 1
 
-        welcome_message = subscribe_number('2096223425')
+        welcome_message = subscribe('2096223425')
         assert 'Welcome back!' in welcome_message
 
         subscriber = Subscriber.objects.get(sms_number='2096223425')

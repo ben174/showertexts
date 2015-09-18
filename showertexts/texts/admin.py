@@ -16,7 +16,7 @@ class ShowerThoughtAdmin(admin.ModelAdmin):
 class SubscriberAdmin(admin.ModelAdmin):
     readonly_fields = ('date_created',)
 
-    list_display = ('sms_number', 'date_created', 'active', 'expired', 'lifetime')
+    list_display = ('sms_number', 'date_created', 'date_renewed', 'active', 'expired', 'lifetime')
     inlines = [
         TextSendInline,
     ]
