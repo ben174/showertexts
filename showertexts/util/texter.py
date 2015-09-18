@@ -42,41 +42,28 @@ def send_text(subscriber, message, post_id):
     )
 
 
-def send_todays_expirations():
-    ret = []
-    expiry_date = datetime.datetime.now() - datetime.timedelta(days=settings.EXPIRATION_DAYS)
-    expiring_subscribers = Subscriber.objects.filter(active=True, date_renewed__lte=expiry_date, lifetime=False)
-    notice = 'HOUSE KEEPING! I\'m clearing out old numbers to make room for more. If you like these, please ' \
-             'resubscribe for free! http://www.showertexts.com'
-    post_id = 'EXP-' + str(datetime.date.today())
-    for subscriber in expiring_subscribers:
-        row = {'to': subscriber, 'action': 'expiration'}
-        try:
-            send_text(subscriber, notice, post_id)
-            row['result'] = 'Success'
-        except DuplicateTextException:
-            row['result'] = 'Duplicate'
-        except TwilioRestException as ex:
-            row['result'] = 'Exception: ' + str(ex)
-            logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(ex))
-        ret.append(row)
-    expiring_subscribers.update(active=False)
-    return ret
-
-
 def send_todays_texts():
     ret = []
     thought = get_todays_thought()
     for subscriber in Subscriber.objects.filter(active=True):
         row = {'to': subscriber, 'action': 'showertext'}
+        message = thought.thought_text
+        post_id = thought.post_id
+        if subscriber.expired:
+            row['action'] = 'expiration'
+            subscriber.active = False
+            subscriber.save()
+            message = 'HOUSE KEEPING! I\'m clearing out old numbers to make room for more. If you like these, please ' \
+                      'resubscribe for free! http://www.showertexts.com'
+            post_id = 'EXP-' + str(datetime.date.today())
         try:
-            send_text(subscriber, thought.thought_text, thought.post_id)
+            send_text(subscriber, message, post_id)
             row['result'] = 'Success'
         except DuplicateTextException:
             row['result'] = 'Duplicate'
         except TwilioRestException as ex:
             row['result'] = 'Exception: ' + str(ex)
-            logging.error('Exception sending number to: '  + subscriber.sms_number + ' - ' + str(ex))
+            logging.error('Exception sending number to: ' + subscriber.sms_number + ' - ' + str(ex))
         ret.append(row)
     return ret
 

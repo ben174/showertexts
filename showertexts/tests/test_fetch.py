@@ -23,8 +23,7 @@ class TestSubscriber(unittest.TestCase):
     def test_send_all(self):
         subscriber = Subscriber.objects.create(sms_number='2096223425')
         subscriber.save()
-        ret = texter.send_todays_expirations()
-        ret += texter.send_todays_texts()
+        ret = texter.send_todays_texts()
         assert ret[0]['action'] == 'showertext'
         assert TextSend.objects.count() == 1
 
@@ -34,10 +33,9 @@ class TestSubscriber(unittest.TestCase):
         subscriber.date_created = expired_date
         subscriber.date_renewed = expired_date
         subscriber.save()
-        ret = texter.send_todays_expirations()
+        ret = texter.send_todays_texts()
 
         assert subscriber.expired
-        ret += texter.send_todays_texts()
         assert ret[0]['action'] == 'expiration'
         assert len(ret) == 1
         assert TextSend.objects.count() == 1

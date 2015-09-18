@@ -21,8 +21,7 @@ def trigger(request):
     if trigger_pass != settings.TRIGGER_PASSWORD:
         return HttpResponse('Please provide the correct trigger password', 'text/plain')
 
-    ret = texter.send_todays_expirations()
-    ret += texter.send_todays_texts()
+    ret = texter.send_todays_texts()
     return HttpResponse(ret, 'text/plain')
 
 
