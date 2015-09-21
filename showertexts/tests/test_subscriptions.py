@@ -4,16 +4,9 @@ from django.conf import settings
 from django.utils import timezone
 from texts.models import ShowerThought, Subscriber, TextSend
 from util.subscription import subscribe
+
 from util import texter
-import util.showerthoughts
 
-
-class TestFetch(unittest.TestCase):
-    def test_fetch(self):
-        thought = util.showerthoughts.get_todays_thought()
-        print thought
-        print ShowerThought.objects.all()
-        assert ShowerThought.objects.count() == 1
 
 
 class TestSubscriber(unittest.TestCase):

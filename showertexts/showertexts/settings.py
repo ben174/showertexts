@@ -91,11 +91,30 @@ EXPIRATION_DAYS = 14
 
 TWILIO_NUMBER = '+14152002895'
 
+# ***********************************
+# Reddit showertexts bot settings  (showerbot.py)
+
+# oauth
+REDDIT_CLIENT_ID = 'H22tb93fZSNgTg'
+REDDIT_SECRET = ''
+
+# a user agent string to identify ourselves to Reddit
+REDDIT_USER_AGENT = 'ShowerTexts by /u/ben174 - http://www.showertexts.com'
+
+# old style auth
+REDDIT_USERNAME = 'showertexts'
+REDDIT_PASSWORD = ''
+
+# ***********************************
+
+
 if 'DJANGO_ADMIN_PASSWORD' in os.environ:
     ACCOUNT_SID = os.environ['TWILIO_SID']
     AUTH_TOKEN = os.environ['TWILIO_TOKEN']
     ADMIN_PASSWORD = os.environ['DJANGO_ADMIN_PASSWORD']
     TRIGGER_PASSWORD = os.environ['TRIGGER_PASSWORD']
+    REDDIT_SECRET = os.environ['REDDIT_SECRET']
+    REDDIT_PASSWORD = os.environ['REDDIT_PASSWORD']
     DEBUG = bool(os.environ.get('DEBUG', False))
 
 if 'DJANGO_SECRET_KEY' in os.environ:
@@ -108,6 +127,7 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+
 
 
 # load custom settings if they exist. this looks anywhere in the path

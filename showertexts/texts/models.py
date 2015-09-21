@@ -10,6 +10,7 @@ class Subscriber(models.Model):
     active = models.BooleanField(default=True)
     date_renewed = models.DateTimeField(null=True, blank=True)
     lifetime = models.BooleanField(default=False)
+    note = models.CharField(max_length=100, null=True, blank=True)
 
     @property
     def expired(self):
@@ -45,6 +46,7 @@ class ShowerThought(models.Model):
     thought_text = models.CharField(max_length=500)
     url = models.URLField(max_length=300, null=True, blank=True)
     active = models.BooleanField(default=True)
+    bot_notified = models.BooleanField(default=False)
 
     def __unicode__(self):
         return str(self.date) + ' ' + self.thought_text

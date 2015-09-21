@@ -1,6 +1,8 @@
 import datetime
 import praw
+from showertexts import settings
 from texts.models import ShowerThought
+from util.showerbot import ShowerBot
 
 banned_phrases = [
     '/r/',
@@ -8,6 +10,7 @@ banned_phrases = [
     'dick',
     'blow job',
 ]
+
 
 def _validate(submission):
     """
@@ -22,22 +25,24 @@ def get_todays_thought():
     if thoughts.exists():
         return thoughts[0]
     new_thought = get_thought()
-    return ShowerThought.objects.create(thought_text=new_thought.title,
-                                        post_id=new_thought.id,
-                                        url=new_thought.url,
-                                        date=datetime.datetime.today())
+    showerthought = ShowerThought.objects.create(thought_text=new_thought.title,
+                                                 post_id=new_thought.id,
+                                                 url=new_thought.url,
+                                                 date=datetime.datetime.today())
+    # post a notification comment on the thread for this showerthought
+    bot = ShowerBot()
+    bot.login()
+    bot.post_notification(showerthought)
 
 
 def get_thought(today=True, rank=1):
-    r = praw.Reddit(user_agent='shower_texts')
+    r = praw.Reddit(user_agent=settings.REDDIT_USER_AGENT)
     params = {}
     if not today:
         params['t'] = 'all'
-    submissions = r.get_subreddit('showerthoughts').get_top(limit=rank+10, params=params)
+    submissions = r.get_subreddit('showerthoughts').get_top(limit=rank + 10, params=params)
     while True:
         submission = submissions.next()
         if _validate(submission):
             return submission
     return submission
-
-
