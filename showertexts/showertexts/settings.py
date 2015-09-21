@@ -108,17 +108,15 @@ REDDIT_PASSWORD = ''
 # ***********************************
 
 
-if 'DJANGO_ADMIN_PASSWORD' in os.environ:
-    ACCOUNT_SID = os.environ['TWILIO_SID']
-    AUTH_TOKEN = os.environ['TWILIO_TOKEN']
-    ADMIN_PASSWORD = os.environ['DJANGO_ADMIN_PASSWORD']
-    TRIGGER_PASSWORD = os.environ['TRIGGER_PASSWORD']
-    REDDIT_SECRET = os.environ['REDDIT_SECRET']
-    REDDIT_PASSWORD = os.environ['REDDIT_PASSWORD']
-    DEBUG = bool(os.environ.get('DEBUG', False))
-
-if 'DJANGO_SECRET_KEY' in os.environ:
-    SECRET_KEY = os.environ['SECRET_KEY']
+# override local vars with env vars, if they exist
+ACCOUNT_SID = os.environ.get('ACCOUNT_SID', ACCOUNT_SID)
+AUTH_TOKEN = os.environ.get('AUTH_TOKEN', AUTH_TOKEN)
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', ADMIN_PASSWORD)
+TRIGGER_PASSWORD = os.environ.get('TRIGGER_PASSWORD', TRIGGER_PASSWORD)
+REDDIT_SECRET = os.environ.get('REDDIT_SECRET', REDDIT_SECRET)
+REDDIT_PASSWORD = os.environ.get('REDDIT_PASSWORD', REDDIT_PASSWORD)
+DEBUG = bool(os.environ.get('DEBUG', False))
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', SECRET_KEY)
 
 STATIC_URL = '/static/'
 
@@ -127,8 +125,6 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
-
-
 
 # load custom settings if they exist. this looks anywhere in the path
 try:
