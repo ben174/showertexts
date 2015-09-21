@@ -9,8 +9,11 @@ banned_phrases = [
     'reddit',
     'dick',
     'blow job',
+    'r/',
+    'gonewild',
 ]
 
+#TODO: Exclude posts which have a body
 
 def _validate(submission):
     """
