@@ -40,12 +40,10 @@ ShowerText.prototype = Object.create(AlexaSkill.prototype);
 ShowerText.prototype.constructor = ShowerText;
 
 ShowerText.prototype.eventHandlers.onLaunch = function(launchRequest, session, response){
-  var output = 'Welcome to Shower Texts. ' +
-    'I can tell you todays Shower Thought. Just ask what is todays shower thought.';
-
-  var reprompt = 'Would you like to know todays shower thought?';
-
-  response.ask(output, reprompt);
+  getThoughtText(function(data){
+    var heading = 'Todays shower thought.';
+    response.tellWithCard(data, heading, data);
+  });
 };
 
 
@@ -55,8 +53,8 @@ ShowerText.prototype.intentHandlers = {
   },
 
   HelpIntent: function(intent, session, response){
-    var speechOutput = 'Ask what is todays shower thought.';
-    response.ask(speechOutput);
+    var speechOutput = 'To get todays shower thought, just say: Alexa, open Shower Thoughts.';
+    response.tellWithCard(speechOutput, 'Help', speechOutput);
   }
 };
 
