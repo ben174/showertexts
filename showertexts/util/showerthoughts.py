@@ -36,6 +36,7 @@ def get_todays_thought():
     bot = ShowerBot()
     bot.login()
     bot.post_notification(showerthought)
+    return showerthought
 
 
 def get_thought(today=True, rank=1):
