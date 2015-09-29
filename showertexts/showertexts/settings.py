@@ -109,12 +109,12 @@ REDDIT_PASSWORD = ''
 
 
 # override local vars with env vars, if they exist
-ACCOUNT_SID = os.environ.get('ACCOUNT_SID', ACCOUNT_SID)
-AUTH_TOKEN = os.environ.get('AUTH_TOKEN', AUTH_TOKEN)
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', ADMIN_PASSWORD)
-TRIGGER_PASSWORD = os.environ.get('TRIGGER_PASSWORD', TRIGGER_PASSWORD)
-REDDIT_SECRET = os.environ.get('REDDIT_SECRET', REDDIT_SECRET)
-REDDIT_PASSWORD = os.environ.get('REDDIT_PASSWORD', REDDIT_PASSWORD)
+ACCOUNT_SID = os.environ.get('ACCOUNT_SID', '')
+AUTH_TOKEN = os.environ.get('AUTH_TOKEN', '')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', '')
+TRIGGER_PASSWORD = os.environ.get('TRIGGER_PASSWORD', 'none')
+REDDIT_SECRET = os.environ.get('REDDIT_SECRET', '')
+REDDIT_PASSWORD = os.environ.get('REDDIT_PASSWORD', '')
 DEBUG = bool(os.environ.get('DEBUG', False))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', SECRET_KEY)
 
