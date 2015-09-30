@@ -5,8 +5,7 @@ from django.utils import timezone
 from texts.models import ShowerThought, Subscriber, TextSend
 from util.subscription import subscribe
 
-from util import texter
-
+from util.texter import Texter
 
 
 class TestSubscriber(unittest.TestCase):
@@ -16,6 +15,7 @@ class TestSubscriber(unittest.TestCase):
     def test_send_all(self):
         subscriber = Subscriber.objects.create(sms_number='2096223425')
         subscriber.save()
+        texter = Texter()
         ret = texter.send_todays_texts()
         assert ret[0]['action'] == 'showertext'
         assert TextSend.objects.count() == 1
@@ -26,6 +26,7 @@ class TestSubscriber(unittest.TestCase):
         subscriber.date_created = expired_date
         subscriber.date_renewed = expired_date
         subscriber.save()
+        texter = Texter()
         ret = texter.send_todays_texts()
 
         assert subscriber.expired

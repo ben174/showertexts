@@ -109,8 +109,8 @@ REDDIT_PASSWORD = ''
 
 
 # override local vars with env vars, if they exist
-ACCOUNT_SID = os.environ.get('ACCOUNT_SID', '')
-AUTH_TOKEN = os.environ.get('AUTH_TOKEN', '')
+TWILIO_SID = os.environ.get('TWILIO_SID', '')
+TWILIO_TOKEN = os.environ.get('TWILIO_TOKEN', '')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', '')
 TRIGGER_PASSWORD = os.environ.get('TRIGGER_PASSWORD', 'none')
 REDDIT_SECRET = os.environ.get('REDDIT_SECRET', '')

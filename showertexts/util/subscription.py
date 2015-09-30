@@ -2,7 +2,7 @@ import logging
 from texts.models import Subscriber
 from twilio import TwilioRestException
 from util.showerthoughts import get_todays_thought
-from util.texter import send_text, DuplicateTextException
+from util.texter import DuplicateTextException, Texter
 
 
 def subscribe(sms_number):
@@ -10,6 +10,7 @@ def subscribe(sms_number):
         return 'You sent nothing yo.'
     sms_number = filter(str.isdigit, str(sms_number))
     subscriber, created = Subscriber.objects.get_or_create(sms_number=sms_number)
+    texter = Texter()
     if not created:
         if subscriber.expired:
             # yay! a renewal
@@ -17,7 +18,7 @@ def subscribe(sms_number):
             subscriber.save()
             thought = get_todays_thought()
             try:
-                send_text(subscriber, thought.thought_text, thought.post_id)
+                texter.send_text(subscriber, thought.thought_text, thought.post_id)
             except TwilioRestException as e:
                 subscriber.active = False
                 subscriber.save()
@@ -36,7 +37,7 @@ def subscribe(sms_number):
         message = "Cool! Welcome to ShowerTexts.com! You'll start receiving Shower Texts daily. " \
                   "Reply STOP at any time if you get sick of them. " \
                   "Your first one will follow..."
-        send_text(subscriber, message, 'initial')
+        texter.send_text(subscriber, message, 'initial')
     except TwilioRestException as e:
         logging.error('Exception sending number to: ' + subscriber.sms_number + ' - ' + str(e))
         return 'I couldn\'t send a text to that number! (' + str(e.msg) + ')'
@@ -44,7 +45,7 @@ def subscribe(sms_number):
         logging.warning('Duplicate welcome text.')
     thought = get_todays_thought()
     try:
-        send_text(subscriber, thought.thought_text, thought.post_id)
+        texter.send_text(subscriber, thought.thought_text, thought.post_id)
     except TwilioRestException as e:
         logging.error('Exception sending number to: ' + subscriber.sms_number + ' - ' + str(e))
         return 'I couldn\'t send a text to that number! (' + str(e.msg) + ')'

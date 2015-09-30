@@ -4,9 +4,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 
 from texts.models import Subscriber
-from util import texter
 from util.showerthoughts import get_todays_thought
 from util.subscription import subscribe as subscribe_number
+from util.texter import Texter
 
 
 def landing(request):
@@ -17,7 +17,7 @@ def trigger(request):
     trigger_pass = request.GET.get('p', None)
     if trigger_pass != settings.TRIGGER_PASSWORD:
         return HttpResponse('Please provide the correct trigger password', 'text/plain')
-
+    texter = Texter()
     ret = texter.send_todays_texts()
     return HttpResponse(ret, 'text/plain')
 
