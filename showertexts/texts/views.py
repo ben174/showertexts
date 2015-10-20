@@ -2,6 +2,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.cache import cache_page
 
 from texts.models import Subscriber
 from util.showerthoughts import get_todays_thought
@@ -22,6 +23,7 @@ def trigger(request):
     return HttpResponse(ret, 'text/plain')
 
 
+#@cache_page(60 * 15)
 def today(request):
     thought = get_todays_thought()
     return HttpResponse(thought.thought_text, 'text/plain')

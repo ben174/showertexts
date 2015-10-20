@@ -115,8 +115,9 @@ ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', '')
 TRIGGER_PASSWORD = os.environ.get('TRIGGER_PASSWORD', 'none')
 REDDIT_SECRET = os.environ.get('REDDIT_SECRET', '')
 REDDIT_PASSWORD = os.environ.get('REDDIT_PASSWORD', '')
-DEBUG = bool(os.environ.get('DEBUG', False))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', SECRET_KEY)
+if os.environ.get('DEBUG', None):
+    DEBUG = bool(os.environ.get('DEBUG', False))
 
 STATIC_URL = '/static/'
 
