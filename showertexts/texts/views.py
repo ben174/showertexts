@@ -23,7 +23,7 @@ def trigger(request):
     return HttpResponse(ret, 'text/plain')
 
 
-#@cache_page(60 * 15)
+@cache_page(60 * 15)
 def today(request):
     thought = get_todays_thought()
     return HttpResponse(thought.thought_text, 'text/plain')
