@@ -5,8 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # environment variable overrides this in production, yo
 SECRET_KEY = 'i&s4g$@%7ql$3605y+2xw8w$*v-)p8kz5#8wch%h3jxvs*i@tn'
 
-# only for dev, env variable overrides in prod
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '.showertexts.com'
@@ -116,8 +115,6 @@ TRIGGER_PASSWORD = os.environ.get('TRIGGER_PASSWORD', 'none')
 REDDIT_SECRET = os.environ.get('REDDIT_SECRET', '')
 REDDIT_PASSWORD = os.environ.get('REDDIT_PASSWORD', '')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', SECRET_KEY)
-if os.environ.get('DEBUG', None):
-    DEBUG = bool(os.environ.get('DEBUG', False))
 
 STATIC_URL = '/static/'
 
