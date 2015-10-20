@@ -2,8 +2,6 @@
     var init = function() {
         $("#subscribe").click(subscribe);
         setInterval(rotateThought, 6000);
-        setInterval(updateCount, 10000);
-        updateCount();
         $("#sms_number").keyup(smsNumberKeyup);
         for (var i = 10; i < $('.rain').width() - 70; i += 35) {
             var delay = getRandomInt(0, 1000);

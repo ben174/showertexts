@@ -35,6 +35,26 @@ h2 {
     font-size: 1.2em;
     color: #7F5C5C;
 }
+
+h3, h4 {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+h5 {
+    color: #4D6944;
+}
+
+h5>a {
+    color: #7D7635;
+}
+
+h6 {
+    max-width: 44em;
+    margin: 2em auto 1em auto;
+    font-size: 1.2em;
+    color: #7F5C5C;
+}
 #main {
   height: 100%;
   padding: 3em 2em;
@@ -77,20 +97,6 @@ input {
     padding: 7px;
 }
 
-
-h3, h4 {
-    color: #777;
-    margin-bottom: 30px;
-}
-
-h5 {
-    color: #4D6944;
-    margin-bottom: 150px;
-}
-
-h5>a {
-    color: #7D7635;
-}
 
 #thought {
     font-size: 1.3em;
@@ -141,3 +147,15 @@ h5>a {
     0%   {top: 0px; opacity: 0.2;}
     100% {top: 200px; opacity: 0.0; }
 }
+
+#left {
+    width: 30%;
+    display: inline-block;
+    font-weight: bold;
+}
+#right {
+    width: 30%;
+    display: inline-block;
+    font-weight: bold;
+}
+
