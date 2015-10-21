@@ -4,7 +4,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 
-
 from texts.models import Subscriber
 from util.showerthoughts import get_todays_thought, get_submissions, choose_alternate, random_thought
 from util.subscription import subscribe as subscribe_number
