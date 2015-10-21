@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head %}
+    <link href="{% static 'css/alternates.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <h1 id="heading" class="animated rubberBand"><a href="http://www.showertexts.com">Today's Choice</a></h1>
+
+    <div id="alternate">
+        <h2>{{ today }}</h2>
+
+        <h3>Alternates:</h3>
+        <table>
+            {% for submission in submissions %}
+            <tr>
+                <th><a href="/alt?p={{ trigger }}&s={{ submission.id }}">{{ submission.score }}</a></th>
+                <td>{{ submission.title }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

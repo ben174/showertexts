@@ -1,18 +1,9 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <title>Shower Texts - Your daily dose of Shower Thoughts</title>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+{% block head %}
     <script src="{% static 'js/landing.js' %}"></script>
-    <link href="{% static 'css/landing.css' %}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css" rel="stylesheet">
-    <meta name="description"
-          content="Shower Thoughts are quick short witty thoughts - this is a site which will automatically text you the most popular Shower Thought each day.">
-</head>
-<body>
-<div id="main">
+{% endblock %}
+{% block content %}
     <h1 id="heading" class="animated rubberBand"><a href="http://www.showertexts.com">ShowerTexts</a></h1>
 
     <div class="rain"></div>
@@ -50,23 +41,4 @@
             </a>
         </div>
     </div>
-</div>
-</body>
-</html>
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-66121593-1', 'auto');
-    ga('send', 'pageview');
-
-</script>
+{% endblock %}

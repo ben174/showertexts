@@ -94,6 +94,7 @@ TWILIO_NUMBER = '+14152002895'
 # Reddit showertexts bot settings  (showerbot.py)
 
 # oauth
+ENABLE_SHOWERBOT = True
 REDDIT_CLIENT_ID = 'H22tb93fZSNgTg'
 REDDIT_SECRET = ''
 

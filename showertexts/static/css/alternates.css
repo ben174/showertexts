@@ -1,0 +1,21 @@
+#main {
+    height: 100%;
+    padding: 3em 2em;
+    text-align: center;
+    overflow: scroll;
+    margin: 20px;
+    background: #B4D2BE none;
+}
+
+#alternate table td {
+    font-size: 20px;
+    padding: 20px;
+    text-align: left;
+    color: #333;
+    font-weight: bold;
+}
+
+#alternate table th {
+    font-size: 30px;
+    text-align: right;
+}
