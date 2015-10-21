@@ -1,4 +1,5 @@
 import datetime
+import logging
 from django.core.cache import cache
 import praw
 from showertexts import settings
@@ -14,13 +15,16 @@ banned_phrases = [
     'gonewild',
 ]
 
-#TODO: Exclude posts which have a body
 
 def _validate(submission):
     """
     Validates submission against a set of rules.
     """
     title = submission.title.lower()
+    if ShowerThought.objects.exists(post_id=submission.id):
+        # sometimes posts are chosen for two days because they fall right on the cusp
+        logging.error("Post has already been chosen: " + submission.title)
+        return False
     return not any([bad_word in title for bad_word in banned_phrases])
 
 
