@@ -23,20 +23,21 @@ def _validate(submission):
     title = submission.title.lower()
     if ShowerThought.objects.filter(post_id=submission.id).exists():
         # sometimes posts are chosen for two days because they fall right on the cusp
-        logging.warning("Post has already been chosen: " + submission.title)
+        logging.warning("Post has already been used: " + submission.title)
         return False
     return not any([bad_word in title for bad_word in banned_phrases])
 
 
 def get_todays_thought():
-    thoughts = ShowerThought.objects.filter(date=datetime.datetime.today(), active=True)
-    if thoughts.exists():
-        return thoughts[0]
+    thought = ShowerThought.objects.filter(date=datetime.datetime.today(), active=True).first()
+    if thought:
+        return thought
     new_thought = get_thought()
     showerthought = ShowerThought.objects.create(thought_text=new_thought.title,
                                                  post_id=new_thought.id,
                                                  url=new_thought.url,
-                                                 date=datetime.datetime.today())
+                                                 date=datetime.datetime.today(),
+                                                 active=True)
     cache.set('todays_thought_text', new_thought.title)
     # post a notification comment on the thread for this showerthought
     bot = ShowerBot()
@@ -50,13 +51,23 @@ def random_thought():
 
 
 def choose_alternate(submission_id):
+    """
+    Invalidates the currently chosen thought and
+    """
     r = praw.Reddit(user_agent=settings.REDDIT_USER_AGENT)
     submission = r.get_submission(submission_id=submission_id)
-    showerthought, _ = ShowerThought.objects.get_or_create(date=datetime.datetime.today())
-    showerthought.thought_text = submission.title
-    showerthought.post_id = submission.id
-    showerthought.url = submission.url
-    showerthought.save()
+    # set any other posts selected for today as inactive
+    ShowerThought.objects.filter(date=datetime.datetime.today()).update(active=False)
+    showerthought, created = ShowerThought.objects.get_or_create(
+        date=datetime.datetime.today(),
+        post_id=submission.id,
+        thought_text=submission.title,
+        url=submission.url
+    )
+    if not created:
+        # i guess i changed my mind, revive this old one
+        showerthought.active = True
+        showerthought.save()
     cache.set('todays_thought_text', showerthought.thought_text)
 
 

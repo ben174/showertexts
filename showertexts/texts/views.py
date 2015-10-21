@@ -1,3 +1,4 @@
+import logging
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -45,6 +46,9 @@ def today(request):
         thought = get_todays_thought()
         ret = thought.thought_text
         cache.set('todays_thought_text', ret, 60 * 15)
+        logging.warning('Uncached: ' + ret)
+    else:
+        logging.warning('Cached: ' + ret)
     return HttpResponse(ret, 'text/plain')
 
 
