@@ -21,9 +21,9 @@ def _validate(submission):
     Validates submission against a set of rules.
     """
     title = submission.title.lower()
-    if ShowerThought.objects.exists(post_id=submission.id):
+    if ShowerThought.objects.filter(post_id=submission.id).exists():
         # sometimes posts are chosen for two days because they fall right on the cusp
-        logging.error("Post has already been chosen: " + submission.title)
+        logging.warning("Post has already been chosen: " + submission.title)
         return False
     return not any([bad_word in title for bad_word in banned_phrases])
 
