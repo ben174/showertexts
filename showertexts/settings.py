@@ -125,17 +125,11 @@ REDDIT_SECRET = os.environ.get('REDDIT_SECRET', '')
 REDDIT_PASSWORD = os.environ.get('REDDIT_PASSWORD', '')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', SECRET_KEY)
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-)
+]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
-
-# load custom settings if they exist. this looks anywhere in the path
-try:
-    from custom_settings import *
-    print "Using custom_settings file."
-except ImportError:
-    pass
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
