@@ -52,23 +52,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'showertexts.wsgi.application'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
-if 'RDS_DB_NAME' in os.environ:
+
+if 'DB_NAME' in os.environ.keys():
+    # running in production
+    print '********** PRODUCTION *************'
+    DEBUG = True
+    ALLOWED_HOSTS = [
+        '.showertexts.com', # Allow domain and subdomains
+        'www.showertexts.com', # Allow domain and subdomains
+        '.showertexts.com.', # Also allow FQDN and subdomains
+    ]
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'NAME': os.environ['DB_NAME'],
+            'USER': os.environ['DB_USER'],
+            'PASSWORD': os.environ['DB_PASS'],
+            'HOST': os.environ['DB_SERVICE'],
+            'PORT': os.environ['DB_PORT']
         }
     }
 
@@ -117,17 +125,11 @@ REDDIT_SECRET = os.environ.get('REDDIT_SECRET', '')
 REDDIT_PASSWORD = os.environ.get('REDDIT_PASSWORD', '')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', SECRET_KEY)
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-)
+]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
-
-# load custom settings if they exist. this looks anywhere in the path
-try:
-    from custom_settings import *
-    print "Using custom_settings file."
-except ImportError:
-    pass
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
