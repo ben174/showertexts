@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand
-from util.texter import send_todays_texts
+from util.texter import Texter
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        send_todays_texts()
+        texter = Texter()
+        texter.send_todays_texts()
