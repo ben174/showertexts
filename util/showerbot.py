@@ -28,7 +28,7 @@ class ShowerBot(object):
                                        'http://www.showertexts.com\n\n'
                                        '_____________________________________________\n\n'
                                        '*^This ^message ^was ^automatically ^posted ^by '
-                                       '^[showerbot](https://github.com/ben174/showertexts/blob/master/showertexts/util/showerbot.py) '
+                                       '^[showerbot](https://github.com/ben174/showertexts/blob/master/util/showerbot.py) '
                                        '^If ^I ^misbehave ^or ^otherwise ^become ^annoying, ^please ^notify ^my ^owner, '
                                        '^/u/ben174. [^View ^the ^source ^code ^here.](https://github.com/ben174/showertexts/)*')
             else:
