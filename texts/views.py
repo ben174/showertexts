@@ -77,6 +77,21 @@ def alternate(request):
     })
 
 
+@requires_trigger
+def assignment(request):
+    """ Allows an admin to select an alternate post from today's front page. """
+    trigger_pass = request.GET.get('p', None)
+    alt_id = request.GET.get('s', None)
+    if alt_id:
+        choose_alternate(alt_id)
+        return HttpResponseRedirect('/today')
+    return render(request, 'alternates.html', {
+        'today': get_todays_thought().thought_text,
+        'submissions': get_submissions(),
+        'trigger': trigger_pass,
+    })
+
+
 @csrf_exempt
 def subscribe(request):
     """

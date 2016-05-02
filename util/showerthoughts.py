@@ -29,9 +29,19 @@ def _validate(submission):
 
 
 def get_todays_thought():
+    # first try to get a thought assigned to today
     thought = ShowerThought.objects.filter(date=datetime.datetime.today(), active=True).first()
     if thought:
         return thought
+
+    # otherwise try to get an unused thought that's not assigned to any date
+    thought = ShowerThought.objects.filter(date__isnull=True, active=True).first()
+    if thought:
+        thought.date = datetime.datetime.today()
+        thought.save()
+        return thought
+
+    # last resort grab whatever today's top shower thought is
     new_thought = get_thought()
     showerthought = ShowerThought.objects.create(thought_text=new_thought.title,
                                                  post_id=new_thought.id,
@@ -47,7 +57,7 @@ def get_todays_thought():
 
 
 def random_thought():
-    return ShowerThought.objects.order_by('?').first()
+    return ShowerThought.objects.filter(active=True).order_by('?').first()
 
 
 def choose_alternate(submission_id):
@@ -69,6 +79,24 @@ def choose_alternate(submission_id):
         showerthought.active = True
         showerthought.save()
     cache.set('todays_thought_text', showerthought.thought_text)
+
+
+def queue_alternate(submission_id):
+    """
+    Queues up an alternative post for a rainy day
+    """
+    r = praw.Reddit(user_agent=settings.REDDIT_USER_AGENT)
+    submission = r.get_submission(submission_id=submission_id)
+    # set any other posts selected for today as inactive
+    showerthought, created = ShowerThought.objects.get_or_create(
+        post_id=submission.id,
+        thought_text=submission.title,
+        url=submission.url
+    )
+    if not created:
+        # i guess i changed my mind, revive this old one
+        showerthought.active = True
+        showerthought.save()
 
 
 def get_thought(today=True, rank=1):

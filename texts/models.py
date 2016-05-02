@@ -41,7 +41,7 @@ class TextSend(models.Model):
 
 
 class ShowerThought(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True, null=True, blank=True)
     post_id = models.CharField(max_length=20)
     thought_text = models.CharField(max_length=500)
     url = models.URLField(max_length=300, null=True, blank=True)
