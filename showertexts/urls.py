@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^trigger$', texts.views.trigger),
     url(r'^today$', texts.views.today),
     url(r'^alt$', texts.views.alternate),
+    url(r'^queue$', texts.views.queue),
     url(r'^random$', texts.views.random),
     url(r'^admin/', include(admin.site.urls)),
 ]

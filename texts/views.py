@@ -6,7 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 
 from texts.models import Subscriber
-from util.showerthoughts import get_todays_thought, get_submissions, choose_alternate, random_thought
+from util.showerthoughts import get_todays_thought, get_submissions, \
+        queue_alternate, choose_alternate, random_thought
 from util.subscription import subscribe as subscribe_number
 from util.texter import Texter
 
@@ -78,15 +79,14 @@ def alternate(request):
 
 
 @requires_trigger
-def assignment(request):
+def queue(request):
     """ Allows an admin to select an alternate post from today's front page. """
     trigger_pass = request.GET.get('p', None)
     alt_id = request.GET.get('s', None)
     if alt_id:
-        choose_alternate(alt_id)
+        queue_alternate(alt_id)
         return HttpResponseRedirect('/today')
-    return render(request, 'alternates.html', {
-        'today': get_todays_thought().thought_text,
+    return render(request, 'queue.html', {
         'submissions': get_submissions(),
         'trigger': trigger_pass,
     })
