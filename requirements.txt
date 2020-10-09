@@ -2,5 +2,5 @@ Django==1.9
 gunicorn==19.4.1
 praw==3.2.1
 psycopg2==2.6.1
-requests==2.7.0
+requests==2.20.0
 twilio==4.4.0
