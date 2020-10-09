@@ -3,7 +3,7 @@ var http       = require('http')
   , APP_ID     = 'amzn1.echo-sdk-ams.app.901a3f73-22df-4ad2-aa7c-ed49c3a07a6f'
   , MTA_KEY    = 'your-mta-key';
 
-var url = 'http://www.showertexts.com/today';
+var url = 'http://www.showertexts.com/random';
 
 
 var getThoughtText = function(callback){
